@@ -18,18 +18,17 @@ import dalvik.system.DexFile;
  */
 public class DexManager {
 
-    private Context context;
-
-    public DexManager(Context context) {
-        this.context = context;
+    static {
+        System.loadLibrary("native-lib");
     }
 
     /**
      * 加载dex文件
      *
+     * @param context
      * @param file
      */
-    public void load(File file) {
+    public void load(Context context, File file) {
         try {
             // TODO: 2019-06-02 也可以使用 DexClassLoader 加载
             DexFile dexFile = DexFile.loadDex(file.getAbsolutePath(),
@@ -37,7 +36,7 @@ public class DexManager {
             // 当前的dex里面的class类名集合
             Enumeration<String> entry = dexFile.entries();
             while (entry.hasMoreElements()) {
-                String clazzName = entry.nextElement();
+                String clazzName = entry.nextElement();// 全类名
                 // 注意这里不能使用Class.forName(clazzName);因为这个class没有加载内存中，是在SD卡上的。
                 Class realClazz = dexFile.loadClass(clazzName, context.getClassLoader());
                 if (realClazz != null) {

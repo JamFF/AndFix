@@ -2,14 +2,7 @@
 #include <string>
 #include "art_method.h"
 
-extern "C" JNIEXPORT jstring JNICALL
-Java_com_ff_andfix_MainActivity_stringFromJNI(
-        JNIEnv *env,
-        jobject /* this */) {
-    std::string hello = "Hello from C++";
-    return env->NewStringUTF(hello.c_str());
-}
-
+// Android 5.0
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_ff_andfix_DexManager_replace(JNIEnv *env, jclass type, jobject wrongMethod,

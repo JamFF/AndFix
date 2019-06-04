@@ -13,11 +13,6 @@ import java.io.File;
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    // Used to load the 'native-lib' library on application startup.
-    static {
-        System.loadLibrary("native-lib");
-    }
-
     private TextView tv;
 
     @Override
@@ -36,12 +31,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.bt_calculator:
                 Calculator calculator = new Calculator();
-                tv.setText("  " + calculator.calculator());
+                tv.setText(String.valueOf(calculator.calculator()));
                 break;
             case R.id.bt_fix:
                 File file = new File(Environment.getExternalStorageDirectory(), "fix.dex");
-                DexManager dexManager = new DexManager(this);
-                dexManager.load(file);
+                new DexManager().load(this, file);
                 break;
         }
     }
